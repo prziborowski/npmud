@@ -1,0 +1,81 @@
+{
+    "0,0,0": {
+        "desc": "Here you are at the center of the universe.\nUnfortunately it is also a cramped room.\nThere is a blackboard at the north end of the room and a number of rows of desks with chairs attached to them facing the board.",
+        "exits": [
+            "south",
+            "down"
+        ],
+        "attribs": [],
+        "title": "Center of the universe"
+    },
+    "3,0,-1": {
+        "desc": "Let us talk a bit more about strings. They are a basic object and once\ncreated are immutable. When you make changes to it, you get a new string.\n\nFrom the Input, output example. Let us use that name variable.\nname = 'NATHAN'\n\nIf I want it to be lower case, I can use the lower method.\nname.lower()\n\nThat would give me,\n'nathan'\n\nIf I want it to look like a proper name, I can use capitalize method.\nname.capitalize()\n\nwould give me,\n'Nathan'\n\nSo you can change your greeting to be:\nprint(\"Hello \" + name.capitalize() + \". Nice to meet you.\")\n",
+        "exits": [
+            "west",
+            "north",
+            "east"
+        ],
+        "attribs": [],
+        "title": "Strings and things"
+    },
+    "5,0,-1": {
+        "desc": "A program is pretty boring if it doesn't behave different based on inputs.\nThis is what conditionals and control flow is for.\n\nif/elif/else:\nIn the case you want to do something if a condition is met, then \"if\" is what\nyou want. If you need more condition branches, the elif (else if) is also useful.\nLet us make a small guessing game as an example.\n\nimport random\n\nanswer = random.randint(1, 100) # A random number between 1 and 100\nwhile True: # A loop that doesn't end naturally.\n   guess = int(input(\"Guess a number between 1 and 100: \"))\n   if guess == answer:\n      print(\"Correct!\")\n      break # This will exit the while loop\n   elif abs(guess - answer) < 10: # within 10%\n      print(\"Hot\")\n   elif abs(guess - answer) < 20: # within 20%\n      print(\"Warm\")\n   else: # Everything else\n      print(\"Cold\")\n\nSo here we handle 3 special cases and 1 general case to try and\ngive hints to the right answer. The while loop\ncontinues until the user guesses the correct answer.\n",
+        "exits": [
+            "west"
+        ],
+        "attribs": [],
+        "title": "Conditional, control flow"
+    },
+    "0,0,-1": {
+        "desc": "You enter the classroom as a professor is actively talking. His voice is soothing to your ears, but you are slightly unnerved by his hiss.\nPython is intended to be easy to read and spaces form the structure of the code.\nDeclaring types is not needed, which is sometimes a curse, but can simplify things.\nAs you wander around this large classroom, you will learn bits and pieces of python and how to use it.",
+        "exits": [
+            "east",
+            "up"
+        ],
+        "attribs": [],
+        "title": "Introduction to Python"
+    },
+    "1,0,-1": {
+        "desc": "The IDE is the application that simplifies development for you. You can manage your project, compile and run the program without having to leave the application.\nIt also provides useful features like auto-completion (press tab or control + .) with documentation about parameter names.\n\nOpen the application. Create a new project, give it any name for now.\nThen create a new file for your project (File -> New... -> File.\nGive it a name that ends with the .py extension. Ex: hello.py\nNow you have a blank sheet to start programming with.\n\nAlthough we haven't written anything, let's make sure we can run it.\nClick Run from the menu and Run...\nSelect Edit Configurations and just pick Run.\nNow you should have a default environment to run this script.\nSelect Run again from the menu and pick Run '<script name>' at the top.\nNow you should have the output at the bottom.\nIt should be fairly blank except for letting you know the process finished.",
+        "exits": [
+            "west",
+            "east"
+        ],
+        "attribs": [],
+        "title": "IDE (Integrated Development Environment)"
+    },
+    "2,0,-1": {
+        "desc": "At one level or another, non-trivial programs deal with input and output.\nIt could be in the form of input from a keyboard, a file, network traffic.\nAlso output could be text on the screen, or writing to a file, or maybe uploading\nto a web site.\n\nFor now, let us focus on input from a keyboard and outputting text to the screen.\ninput([prompt]) is the function to get input from the user with an optional prompt.\nprint(message) is the function to output to the screen.\n\nLet us do a simple example here.\n\nname = input(\"What is your name? \")\nprint(\"Hello \" + name + \". Nice to meet you.\")\n\nYou can store values with a variable on the left hand side of the equals sign if the function\nreturns a value. To combine strings together you can use the plus sign for\nconcatenation. There are many ways to do string formatting and they'll be\nintroduced gradually as we go on.",
+        "exits": [
+            "west",
+            "east"
+        ],
+        "attribs": [],
+        "title": "Input, output"
+    },
+    "0,-1,0": {
+        "desc": "This is the middle of a hallway.\nThere are lockers on both sides with various graffiti marking who owns this territory.",
+        "exits": [
+            "north"
+        ],
+        "attribs": [],
+        "title": "A crowded hallway"
+    },
+    "3,1,-1": {
+        "desc": "An int (integer) is a rational, non-fraction number. In basic terms,\nit is numbers like 0, 1, ..., 100005 and not numbers like 0.5, 3.14159...\nIf you want to convert a string to an int, you can usually use the function int().\nint(\"3\") will give you a 3. Beware that if it isn't an integer, then you will get\nan exception int(\"three\") will be a ValueError exception.\n\nFloats are rational numbers that have some imprecision.\nYou can convert a string to float with the same trick. E.g. float(\"0.1\") will give\nyou 0.1. If you need better precision, there is a decimal module\n\nBoolean has 2 possible values: False and True. It is useful in places where you\nonly need those choices. It is also the basis for the if-condition control flow.\nYou can get the opposite of that value by putting \"not\" before it.\nnot True is False\nnot False is True\n",
+        "exits": [
+            "south"
+        ],
+        "attribs": [],
+        "title": "Ints, floats, boolean"
+    },
+    "4,0,-1": {
+        "desc": "There are a lot of built-in functions in python to do common functionality.\nMost of the functions are organized in modules that you can import.\n",
+        "exits": [
+            "west",
+            "east"
+        ],
+        "attribs": [],
+        "title": "Function, modules"
+    }
+}

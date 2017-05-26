@@ -1,0 +1,43 @@
+<html>
+    <head><title>Fearghail</title>
+    <style> textarea { font-family: "Courier New", Courier, monospace; } </style>
+    </head>
+    <body>
+    <script>
+            var hostname = location.hostname;
+            var connected = false;
+            var ws = new WebSocket("ws://" + hostname + ":4000/");
+            ws.onopen = function (event) {
+               connected = true;
+            }
+            ws.onmessage = function (event) {
+               var messages = document.getElementById('output');
+               messages.value += '\n' + event.data;
+               messages.scrollTop = messages.scrollHeight;
+            }
+            ws.onclose = function (event) {
+               var messages = document.getElementById('output');
+               if (connected) {
+                  messages.value += '\n\nConnection to server closed.';
+               } else {
+                  messages.value += '\n\nFailed to establish connection to server.';
+               }
+               messages.scrollTop = messages.scrollHeight;
+            }
+            function sendMessage() {
+               var text = document.getElementById('text');
+               ws.send(text.value);
+               text.value = '';
+               var messages = document.getElementById('output');
+               messages.value += '\n';
+            }
+    </script>
+    <div id="main"> <textarea rows="40" cols="80" id="output"></textarea> </div>
+    <div id="user_input">
+        <input id="text" type="text" size="80" autofocus
+            onkeydown = "if (event.keyCode == 13)
+                            document.getElementById('submit').click()" />
+        <input id="submit" type="submit" value="Send" onclick="sendMessage();" />
+    </div>
+    </body>
+</html>
