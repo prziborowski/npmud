@@ -108,6 +108,7 @@ async def god_set(user, remainder, **kwargs):
         user_room = room.get_room(user._coord)
         user_room['title'] = remainder[0]
         room.build_and_save()
+        user.process_input('')
     elif user.is_builder() and prop == 'desc':
         # Keep running until we get a line only containing 'end'.
         user.add_message("OK, go ahead. Stop with a line containing 'end'.")
