@@ -91,6 +91,7 @@ start_server = websockets.serve(handler, '0.0.0.0', 4000)
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(start_server)
+logger.info("Server started.")
 try:
     loop.run_forever()
 except KeyboardInterrupt:
