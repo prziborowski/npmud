@@ -4,25 +4,26 @@ from . import users
 import asyncio
 import re
 
+def get_command_from_input(user, input_):
+    command = [c for c in COMMAND_LIST if c[0].startswith(input_)]
+    if len(command) == 0 and (user.is_god() or user.is_builder()):
+        command = [c for c in GOD_COMMAND_LIST
+                   if c[0].startswith(input_)]
+    return command[0]
 
 async def process(user, input_):
     input_ = input_.strip()
     userCommand, *remainder = re.split('\s+', input_, 1)
+
     if userCommand == '':
         user.add_message('')
         return
-    command = [c for c in COMMAND_LIST if c[0].startswith(userCommand)]
+    command = get_command_from_input(user, userCommand)
     if len(command) == 0:
-        if user.is_god() or user.is_builder():
-            command = [c for c in GOD_COMMAND_LIST
-                       if c[0].startswith(userCommand)]
-            if len(command) == 0:
-                user.add_message('Unknown command: {}'.format(userCommand))
-                return
-        else:
-            user.add_message('Unknown command: {}'.format(userCommand))
-            return
-    name, func = command[0]  # Pick the first one
+        user.add_message('Unknown command: {}'.format(userCommand))
+        return
+
+    name, func, *_ = command
     await func(user=user, rawinput=input_, name=name, remainder=remainder)
 
 
@@ -88,6 +89,21 @@ async def exits(user, **kwargs):
     user.add_message('Exits:\n{}'.format(', '.join(user_room['exits'])))
 
 
+async def help_command(user, remainder, **kwargs):
+    if len(remainder) == 0:
+        command_list = '\n'.join([n[0] for n in COMMAND_LIST])
+        user.add_message('What would like to know more about?\n'
+                         'Type help <command>\n'
+                         '{}'.format(command_list))
+        return
+    command = get_command_from_input(user, remainder[0])
+    if len(command) == 0:
+        user.add_message("I can't help you with {}".format(remainder[0]))
+        return
+    help_message = command[2]
+    user.add_message(help_message)
+
+
 async def god_goto(user, remainder, **kwargs):
     coords = re.split('\s+', remainder[0])
     if len(coords) < 3:
@@ -133,33 +149,35 @@ async def send_broadcast(fromUser, message):
     await asyncio.wait([u.broadcast(fromUser, message) for u in users.all()])
 
 
+
 COMMAND_LIST = [
-   ("'", say),
-   ('broadcast', broadcast),
+   ("'", say, "Say something to the room you are in"),
+   ('broadcast', broadcast, "Broadcast a message to everyone"),
    #   'cast',
    #   'close',
-   ('down', move),
-   ('east', move),
+   ('down', move, "Move down"),
+   ('east', move, "Move east"),
    #   'emote',
-   ('exits', exits),
-   #   'help',
-   ('look', look),
+   ('exits', exits, "List the visible exits from this room"),
+   ('help', help_command, "Get help about particular commands"),
+   ('look', look, "Look at the room details"),
    #   'laugh',
-   ('north', move),
+   ('north', move, "Move north"),
    #   'open',
-   ('quit', quit),
-   ('south', move),
-   ('say', say),
-   ('sit', sit),
+   ('quit', quit, "Quit the game"),
+   ('south', move, "Move south"),
+   ('say', say, "Say something to the room you are in"),
+   ('sit', sit, "Sit down and rest"),
    #   'shout',
    #   'scream',
-   ('stand', stand),
-   ('up', move),
-   ('west', move),
+   ('stand', stand, "Stand up from sitting position"),
+   ('up', move, "Move up"),
+   ('west', move, "Move west"),
 ]
 
 GOD_COMMAND_LIST = [
-   ('goto', god_goto),
-   ('set', god_set),
+   ('goto', god_goto, "Goto a map coordinate, whether the room exists or not"),
+   ('set', god_set, "Set a property. 'title' for title of room, " \
+                    "'desc' for room description"),
    #   'summon',
 ]
