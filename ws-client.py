@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import argparse
 import asyncio
 import sys
 import websockets
@@ -41,10 +42,15 @@ async def client(ip):
 
 
 def main(args):
-    if len(args) < 1:
-        print("Please provide a remote server to connect to.")
-        return
-    asyncio.get_event_loop().run_until_complete(client(args[0]))
+    parser = argparse.ArgumentParser(description='npmud client')
+    parser.add_argument(
+        '--server',
+        default='localhost',
+        help='The remote npmud server to connect to',
+        dest='server',
+    )
+    args = parser.parse_args()
+    asyncio.get_event_loop().run_until_complete(client(args.server))
 
 
 if __name__ == '__main__':
