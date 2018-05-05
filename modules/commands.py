@@ -9,7 +9,10 @@ def get_command_from_input(user, input_):
     if len(command) == 0 and (user.is_god() or user.is_builder()):
         command = [c for c in GOD_COMMAND_LIST
                    if c[0].startswith(input_)]
-    return command[0]
+    if len(command) == 0:
+        return None
+    else:
+        return command[0]
 
 async def process(user, input_):
     input_ = input_.strip()
@@ -19,7 +22,7 @@ async def process(user, input_):
         user.add_message('')
         return
     command = get_command_from_input(user, userCommand)
-    if len(command) == 0:
+    if not command:
         user.add_message('Unknown command: {}'.format(userCommand))
         return
 
