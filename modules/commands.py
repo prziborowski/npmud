@@ -100,7 +100,7 @@ async def help_command(user, remainder, **kwargs):
                          '{}'.format(command_list))
         return
     command = get_command_from_input(user, remainder[0])
-    if len(command) == 0:
+    if not command:
         user.add_message("I can't help you with {}".format(remainder[0]))
         return
     help_message = command[2]
